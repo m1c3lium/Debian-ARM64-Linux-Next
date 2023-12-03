@@ -30,7 +30,7 @@ jobs:
           wget https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm64/configs/bcm2711_defconfig -O .config
 
 
-          # make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j `nproc` bindeb-pkg
           cd ..
 
