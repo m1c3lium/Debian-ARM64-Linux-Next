@@ -12,9 +12,8 @@ jobs:
     - uses: pguyot/arm-runner-action@v2
       id: build_image
       with:
-        base_image: raspios_lite:2022-04-04
+        base_image: raspi_4_bullseye:20220121
         commands: |
-            cat /home/runner/work/_actions/pguyot/arm-runner-action/v2/download_image.sh
             sudo apt-get install -y build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
             git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
             cd linux
