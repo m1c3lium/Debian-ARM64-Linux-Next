@@ -16,16 +16,16 @@ jobs:
       env:
         GZIP: -9
       run: |
-          wget http://ftp.us.debian.org/debian/pool/main/l/linux/linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb
-          ar x linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb
+          wget http://ftp.us.debian.org/debian/pool/main/l/linux-signed-arm64/linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb
+          ar x linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb
           sudo rm /boot/config-*
           mkdir linux-kernel
-          dpkg-deb -xv linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb linux-kernel
-          sudo cp linux-kernel/boot/config-6.6-arm64 /boot
+          dpkg-deb -xv linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb linux-kernel
+          sudo cp linux-kernel/boot/config-6.5.0-5-arm64 /boot
           sudo apt-get update -y
           sudo apt-get install -y git crossbuild-essential-arm64 debhelper build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
           git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
-          sudo cp linux-kernel/boot/config-6.6-arm64 linux/.config
+          sudo cp linux-kernel/boot/config-6.5.0-5-arm64 linux/.config
           cd linux
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
           scripts/config --disable DEBUG_INFO
