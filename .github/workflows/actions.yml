@@ -19,8 +19,9 @@ jobs:
           wget http://ftp.us.debian.org/debian/pool/main/l/linux/linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb
           ar x linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb
           sudo rm /boot/config-*
-          dpkg-deb -xv linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb
+          dpkg-deb -xv linux-image-6.6-arm64-unsigned_6.6.3-1~exp1_arm64.deb linux-kernel
           ls .
+          ls linux-kernel
           ls /boot
           sudo cp boot/config-6.6-arm64 /boot
           sudo apt-get update -y
