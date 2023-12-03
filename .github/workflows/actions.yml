@@ -15,7 +15,7 @@ jobs:
         base_image: raspios_lite_arm64:2022-04-04
         commands: |
             sudo apt-get update -y
-            sudo apt-get install -y build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
+            sudo apt-get install -y git build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
             git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
             cd linux
             scripts/config --disable DEBUG_INFO
