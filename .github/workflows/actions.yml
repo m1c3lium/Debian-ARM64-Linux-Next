@@ -34,7 +34,7 @@ jobs:
 
 
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
-          cat .config
+          grep CONFIG_CRYPTO_USER_API_HASH= .config
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j `nproc` bindeb-pkg
           cd ..
 
