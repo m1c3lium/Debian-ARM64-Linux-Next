@@ -1,4 +1,4 @@
-name: Generate Build Pipelines
+name: Generate ISO Pipelines
 
 on:
   push:
@@ -6,23 +6,24 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-    - uses: pguyot/arm-runner-action@v2
-      id: build_image
-      with:
-        base_image: raspios_lite_arm64:2022-04-04
-        image_additional_mb: 20480
-        commands: |
-            sudo apt-get update -y
-            sudo apt-get install -y git debhelper build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
-            git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
-            cd linux
-            make olddefconfig
-            scripts/config --disable DEBUG_INFO
-            make -j `nproc` bindeb-pkg
-            cd ..
+    - uses: actions/checkout@v3
+
+    - name: install host dependencies
+      env:
+        GZIP: -9
+      run: |
+          sudo apt-get update -y
+          sudo apt-get install -y git crossbuild-essential-arm64 debhelper build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
+          git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
+          cd linux
+          make olddefconfig
+          scripts/config --disable DEBUG_INFO
+          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j `nproc` bindeb-pkg
+          cd ..
 
     
     - name: upload rpi4b artifact
