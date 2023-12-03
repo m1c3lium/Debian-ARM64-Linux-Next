@@ -27,8 +27,12 @@ jobs:
           git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
           sudo cp linux-kernel/boot/config-6.5.0-5-arm64 linux/.config
           cd linux
-          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
           scripts/config --disable DEBUG_INFO
+          scripts/config --disable SYSTEM_TRUSTED_KEYS
+          scripts/config --disable SYSTEM_REVOCATION_KEYS
+          scripts/config --enable MODULE_COMPRESS_XZ
+          
+          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j `nproc` bindeb-pkg
           cd ..
 
