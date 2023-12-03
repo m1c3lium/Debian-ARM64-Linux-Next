@@ -16,18 +16,15 @@ jobs:
       env:
         GZIP: -9
       run: |
-          #wget http://ftp.us.debian.org/debian/pool/main/l/linux-signed-arm64/linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb
-          #ar x linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb
-          #mkdir linux-kernel
-          #dpkg-deb -xv linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb linux-kernel
-          #sudo cp linux-kernel/boot/config-6.5.0-5-arm64 /boot
+          wget http://ftp.us.debian.org/debian/pool/main/l/linux-signed-arm64/linux-image-6.5.0-5-arm64_6.5.13-1_arm64.deb
+          dpkg-deb --fsys-tarfile linux-image-*.deb | tar --wildcards -x ./boot/conf*
           sudo apt-get update -y
           sudo apt-get install -y git xz-utils crossbuild-essential-arm64 debhelper build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
           git clone --single-branch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
-          #sudo cp linux-kernel/boot/config-6.5.0-5-arm64 linux/.config
+          cp boot/config-* linux/.config
           
           cd linux
-          wget https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm64/configs/bcm2711_defconfig -O .config
+          # wget https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm64/configs/bcm2711_defconfig -O .config
 
 
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
