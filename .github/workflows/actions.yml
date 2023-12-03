@@ -1,0 +1,31 @@
+name: Generate Build Pipelines
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: pguyot/arm-runner-action@v2
+      id: build_image
+      with:
+        base_image: raspi_4_bookworm:20230612
+        commands: |
+            sudo apt-get install -y build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
+            git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
+            cd linux
+            scripts/config --disable DEBUG_INFO
+            make -j `nproc` bindeb-pkg
+            cd ..
+
+    
+    - name: upload rpi4b artifact
+      uses: actions/upload-artifact@v3
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        path: linux-image-*.deb
+        name: linux-image-arm64.deb
