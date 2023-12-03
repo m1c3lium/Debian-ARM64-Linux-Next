@@ -25,6 +25,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y git crossbuild-essential-arm64 debhelper build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
           git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
+          sudo cp linux-kernel/boot/config-6.6-arm64 linux/.config
           cd linux
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
           scripts/config --disable DEBUG_INFO
