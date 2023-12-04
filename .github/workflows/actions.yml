@@ -23,7 +23,7 @@ jobs:
           git clone --single-branch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
           cp boot/config-* linux/.config
           sudo rm -rf /lib/modules
-          sudo umount /tmp
+          sudo rm -rf /tmp
           
           cd linux
           # wget https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm64/configs/bcm2711_defconfig -O .config
