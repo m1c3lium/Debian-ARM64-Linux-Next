@@ -22,7 +22,7 @@ jobs:
           sudo apt-get install -y git xz-utils crossbuild-essential-arm64 debhelper build-essential linux-source bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison
           git clone --single-branch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git --depth=1
           cp boot/config-* linux/.config
-          sudo rm -rf /lib/modules
+          sudo rm -rf /lib/modules/*
           sudo rm -rf /tmp
           
           cd linux
